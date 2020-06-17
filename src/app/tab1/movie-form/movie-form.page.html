@@ -1,0 +1,52 @@
+<ion-header translucent>
+  <ion-toolbar>
+    <ion-title *ngIf="isNew">New Movie</ion-title>
+    <ion-title *ngIf="!isnew">{{movie.title}}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismissModal()">Close</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Information</ion-card-title>
+    </ion-card-header>
+  
+    <ion-card-content>
+      <ion-item *ngIf="auth.can('patch: movies')">
+        <ion-label slot="start">Title</ion-label>
+        <ion-input [(ngModel)]="movie.title" [name]="'Movie Title'" placeholder="Movie title"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label slot="start">Release Date</ion-label>
+        <ion-label *ngIf="!auth.can('patch: movies')">{{ movie.release_date }}</ion-label>
+        <ion-datetime [(ngModel)]="movie.release_date" displayFormat="DD MMMM YYYY" placeholder="Select Date"></ion-datetime>
+        <!--<ion-input *ngIf="auth.can('patch: movies')" [(ngModel)]="movie.release_date" [name]="'Movie Release date'"></ion-input>-->
+      </ion-item>
+      <ion-button 
+        *ngIf="auth.can('patch: movies')"
+        (click)="saveClicked()">Save</ion-button>
+      <ion-button 
+        *ngIf="auth.can('patch: movies')"
+        (click)="dismissModal()">Cancel</ion-button>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card *ngIf="!isNew">
+    <ion-card-header>
+      <ion-card-title>Cast</ion-card-title>
+    </ion-card-header>
+  
+    <ion-card-content>
+      <ion-list>
+        <ion-item *ngFor="let actor of Object.keys(movie.cast)">
+          <ion-label>{{ movie.cast[actor].name }}</ion-label>
+          <ion-icon *ngIf="auth.can('patch: movies')" slot="end" name="trash-outline"></ion-icon>
+        </ion-item>
+      </ion-list>
+      <ion-button *ngIf="auth.can('patch: movies')" expand="block">Add Actor</ion-button>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
