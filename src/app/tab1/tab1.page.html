@@ -3,6 +3,14 @@
     <ion-title>
       Movies
     </ion-title>
+    <ion-buttons slot="primary">
+      <ion-button *ngIf="!auth.token" [href]="loginURL">
+        <ion-title>Log In</ion-title>
+      </ion-button>
+      <ion-button *ngIf="auth.token" (click)="auth.logout()">
+        <ion-title>Log Out</ion-title>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -12,4 +20,23 @@
       <ion-title size="large">Movies</ion-title>
     </ion-toolbar>
   </ion-header>
+
+  <div *ngIf="movies && movies.items && auth.can('get: movies')">
+    <ion-card 
+      *ngFor="let movie of Object.keys(movies.items)"
+      (click)="presentModal(movies.items[movie])">
+      <ion-card-header>
+        <ion-card-subtitle>{{ movies.items[movie].release_date }}</ion-card-subtitle>
+        <ion-card-title>{{ movies.items[movie].title }}</ion-card-title>
+      </ion-card-header>
+    </ion-card>
+    <ion-card
+     id="add-movie"
+     *ngIf="auth.can('post: movies')"
+     (click)="presentModal()">
+        <ion-card-content>
+            <ion-title><ion-icon name="add-circle"></ion-icon> Create Movie</ion-title>
+        </ion-card-content>
+      </ion-card>
+  </div>
 </ion-content>
