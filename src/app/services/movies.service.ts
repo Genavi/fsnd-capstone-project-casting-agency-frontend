@@ -3,11 +3,13 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { AuthService } from './auth.service';
 import { environment } from 'src/environments/environment';
+import { Actor } from './actors.service';
 
 export interface Movie {
   id: number;
   title: string;
   release_date: string;
+  cast: {[key: number]: Actor};
 }
 
 @Injectable({
@@ -15,6 +17,7 @@ export interface Movie {
 })
 export class MoviesService {
   url = environment.apiServerUrl;
+  public active_movie: Movie;
   public items: {[key: number]: Movie} = {};
 
   constructor(private auth: AuthService, private http: HttpClient) { }
@@ -37,9 +40,10 @@ export class MoviesService {
     }
   }
 
-  moviesToItems( movies: Array<Movie>) {
+  moviesToItems(movies: Array<Movie>) {
     for (const movie of movies) {
       this.items[movie.id] = movie;
     }
   }
+  
 }
