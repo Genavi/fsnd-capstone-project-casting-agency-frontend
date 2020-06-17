@@ -4,6 +4,7 @@ import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AuthService } from './services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -14,6 +15,7 @@ export class AppComponent {
   constructor(
     private auth: AuthService,
     private platform: Platform,
+    readonly router: Router,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar
   ) {
@@ -28,6 +30,11 @@ export class AppComponent {
       // Perform required auth actions
       this.auth.load_jwts();
       this.auth.check_token_fragment();
+
+      if (!this.auth.token) {
+        const loginURL = this.auth.build_login_link('/tabs/user');
+        window.open(loginURL, '_self')
+      }
     });
   }
 }
