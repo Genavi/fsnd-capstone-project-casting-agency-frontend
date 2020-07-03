@@ -6,6 +6,10 @@ const routes: Routes = [
   {
     path: '',
     component: Tab2Page,
+  },
+  {
+    path: 'actor-form',
+    loadChildren: () => import('./actor-form/actor-form.module').then( m => m.ActorFormPageModule)
   }
 ];
 

@@ -3,6 +3,14 @@
     <ion-title>
       Actors
     </ion-title>
+    <ion-buttons slot="primary">
+      <ion-button *ngIf="!auth.token" [href]="loginURL">
+        <ion-title>Log In</ion-title>
+      </ion-button>
+      <ion-button *ngIf="auth.token" (click)="auth.logout()">
+        <ion-title>Log Out</ion-title>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -12,4 +20,23 @@
       <ion-title size="large">Actors</ion-title>
     </ion-toolbar>
   </ion-header>
+
+  <div *ngIf="actors && actors.items && auth.can('get: actors')">
+    <ion-card 
+      *ngFor="let actor of Object.keys(actors.items)"
+      (click)="presentModal(actors.items[actor])">
+      <ion-card-header>
+        <ion-card-title>{{ actors.items[actor].name }}</ion-card-title>
+        <ion-card-subtitle>Age: {{ actors.items[actor].age }}</ion-card-subtitle>
+      </ion-card-header>
+    </ion-card>
+    <ion-card
+     id="add-actor"
+     *ngIf="auth.can('post: actors')"
+     (click)="presentModal()">
+        <ion-card-content>
+            <ion-title>Create Actor</ion-title>
+        </ion-card-content>
+      </ion-card>
+  </div>
 </ion-content>
