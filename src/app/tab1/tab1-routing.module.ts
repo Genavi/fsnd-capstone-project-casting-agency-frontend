@@ -6,6 +6,10 @@ const routes: Routes = [
   {
     path: '',
     component: Tab1Page,
+  },
+  {
+    path: 'movie-form',
+    loadChildren: () => import('./movie-form/movie-form.module').then( m => m.MovieFormPageModule)
   }
 ];
 

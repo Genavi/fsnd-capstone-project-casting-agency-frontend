@@ -26,7 +26,7 @@
       *ngFor="let movie of Object.keys(movies.items)"
       (click)="presentModal(movies.items[movie])">
       <ion-card-header>
-        <ion-card-subtitle>{{ movies.items[movie].release_date }}</ion-card-subtitle>
+        <ion-card-subtitle>{{ movies.items[movie].release_date | date: 'dd MMMM yyyy' }}</ion-card-subtitle>
         <ion-card-title>{{ movies.items[movie].title }}</ion-card-title>
       </ion-card-header>
     </ion-card>
@@ -35,7 +35,7 @@
      *ngIf="auth.can('post: movies')"
      (click)="presentModal()">
         <ion-card-content>
-            <ion-title><ion-icon name="add-circle"></ion-icon> Create Movie</ion-title>
+          <ion-title>Create Movie</ion-title>
         </ion-card-content>
       </ion-card>
   </div>
