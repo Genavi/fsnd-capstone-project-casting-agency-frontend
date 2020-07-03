@@ -20,7 +20,7 @@ export class Tab1Page implements OnInit {
     public movies: MoviesService,
     public actors: ActorsService
   ) {
-    this.loginURL = auth.build_login_link('/tabs/movies');
+    this.loginURL = this.auth.build_login_link('/tabs/movies');
   }
 
   ngOnInit() {
@@ -39,6 +39,7 @@ export class Tab1Page implements OnInit {
     });
     modal.onDidDismiss().then(() => {
       this.movies.getMovies();
+      this.actors.getActors();
     })
 
     return await modal.present();

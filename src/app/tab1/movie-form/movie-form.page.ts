@@ -32,10 +32,6 @@ export class MovieFormPage implements OnInit {
         cast: [],
       };
     }
-
-    Object.keys(this.movie.cast).forEach(actor => {
-      console.log(this.movie.cast[actor].name)
-    })
   }
 
   titleEdited() {

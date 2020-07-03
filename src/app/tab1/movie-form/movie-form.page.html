@@ -23,7 +23,7 @@
       </ion-item>
       <ion-item>
         <ion-label slot="start">Release Date</ion-label>
-        <ion-label *ngIf="!auth.can('patch: movies')">{{ movie.release_date }}</ion-label>
+        <ion-label *ngIf="!auth.can('patch: movies')">{{ movie.release_date | date: 'dd MMMM yyyy' }}</ion-label>
         <ion-datetime *ngIf="auth.can('patch: movies')" [(ngModel)]="movie.release_date" (ionChange)="dateEdited()" displayFormat="DD MMMM YYYY" placeholder="Select Date"></ion-datetime>
       </ion-item>
       <ion-item>
@@ -41,7 +41,7 @@
       <ion-list>
         <ion-item *ngFor="let actor of Object.keys(movie.cast); let i = index;  trackBy: customTrackBy">
           <ion-label>{{ movie.cast[actor].name }}</ion-label>
-          <ion-button (click)="removeActor(i, movie.cast[actor].id)">Remove</ion-button>
+          <ion-button (click)="removeActor(i, movie.cast[actor].id)" *ngIf="auth.can('patch: movies')">Remove</ion-button>
         </ion-item>
 
         <ion-item *ngIf="auth.can('patch: movies')">
