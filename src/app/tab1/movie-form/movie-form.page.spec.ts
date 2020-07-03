@@ -3,7 +3,7 @@ import { IonicModule } from '@ionic/angular';
 
 import { MovieFormPage } from './movie-form.page';
 
-describe('MovieDetailsPage', () => {
+describe('MovieFormPage', () => {
   let component: MovieFormPage;
   let fixture: ComponentFixture<MovieFormPage>;
 
